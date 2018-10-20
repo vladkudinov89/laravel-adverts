@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {

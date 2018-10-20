@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Entity\User;
-use Dotenv\Exception\ValidationException;
+//use Dotenv\Exception\ValidationException;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -40,7 +41,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $this->clearLoginAttempts($request);
             $user = Auth::user();
-            if (!$user->status !== User::STATUS_ACTIVE) {
+            if ($user->status !== User::STATUS_ACTIVE) {
                 Auth::logout();
                 return back()->with('error', 'You need to confirm your account. Please check your email.');
             }
@@ -61,6 +62,6 @@ class LoginController extends Controller
 
     protected function username()
     {
-        return 'name';
+        return 'email';
     }
 }
