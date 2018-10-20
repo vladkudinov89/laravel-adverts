@@ -34,3 +34,5 @@ assets-watch:
 perm:
 	sudo chgrp -R www-data storage bootstrap/cache
 	sudo chmod -R ug+rwx storage bootstrap/cache
+	if [ -d "node_modules" ]; then sudo chown ${USER}:${USER} node_modules -R; fi
+	if [ -d "public/build" ]; then sudo chown ${USER}:${USER} public/build -R; fi
