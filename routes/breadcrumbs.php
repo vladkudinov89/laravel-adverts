@@ -1,7 +1,6 @@
 <?php
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 Breadcrumbs::register('home', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->push('Home', route('home'));
