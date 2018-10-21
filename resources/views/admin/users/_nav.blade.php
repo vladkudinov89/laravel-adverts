@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: vlad
- * Date: 20.10.18
- * Time: 22:53
- */
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+        <a class="nav-link active"
+                            href="{{ route('admin.users.index') }}">Users</a>
+    </li>
+</ul>

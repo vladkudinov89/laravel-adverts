@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
+use Mockery\Exception\InvalidArgumentException;
 
 /**
  * @property int $id
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
  * @property string $password
  * @property string $verify_token
  * @property string $status
+ * @property string $role
  * */
 class User extends Authenticatable
 {
@@ -22,12 +24,16 @@ class User extends Authenticatable
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
 
+    public const ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admin';
+
+
     protected $fillable = [
-        'name', 'email', 'password', 'status'
+        'name', 'email', 'password', 'status' , 'role'
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'verify_token'
     ];
 
     public static function register(
@@ -78,5 +84,25 @@ class User extends Authenticatable
             'status' => self::STATUS_ACTIVE,
             'verify_token' => null
         ]);
+    }
+
+    public function changeRole($role): void
+    {
+        if(!\in_array($role , [self::ROLE_USER , self::ROLE_ADMIN] , true))
+        {
+            throw new InvalidArgumentException('Undefined role"' . $role .'"');
+        }
+
+        if($this->role === $role)
+        {
+            throw new \DomainException('Role is already assigned.');
+        }
+
+        $this->update(['role' => $role]);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
     }
 }

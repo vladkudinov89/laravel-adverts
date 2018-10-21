@@ -82,19 +82,11 @@
 <main class="app-content py-3">
     <div class="container">
 
-        {{--@section('breadcrumbs')--}}
-        {{--<ul class="breadcrumb">--}}
-        {{--<li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>--}}
-        {{--<li class="breadcrumb-item"><a href="{{route('login')}}">Login</a></li>--}}
-        {{--<li class="breadcrumb-item active">Reset</li>--}}
-        {{--<li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>--}}
-        {{--</ul>--}}
-        {{--@endsection--}}
-
         @section('breadcrumbs' , Breadcrumbs::render())
         @yield('breadcrumbs')
         @include('layouts.partials.flash')
         @yield('content')
+
     </div>
 </main>
 

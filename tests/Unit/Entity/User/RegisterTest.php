@@ -3,13 +3,15 @@
 namespace Tests\Unit\Entity\User;
 
 use App\Entity\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
+    use DatabaseTransactions;
 
     public function testRequest(): void
     {
@@ -29,6 +31,8 @@ class RegisterTest extends TestCase
 
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
+
+        self::assertFalse($user->isAdmin());
     }
 
     public function testVerify(): void
