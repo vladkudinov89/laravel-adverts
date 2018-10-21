@@ -78,14 +78,14 @@
                 <td>{{ $user->id }}</td>
                 <td><a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a></td>
                 <td>{{ $user->email }}</td>
-                {{--<td>--}}
-                    {{--@if ($user->isWait())--}}
-                        {{--<span class="badge badge-secondary">Waiting</span>--}}
-                    {{--@endif--}}
-                    {{--@if ($user->isActive())--}}
-                        {{--<span class="badge badge-primary">Active</span>--}}
-                    {{--@endif--}}
-                {{--</td>--}}
+                <td>
+                    @if ($user->isWait())
+                        <span class="badge badge-secondary">Waiting</span>
+                    @endif
+                    @if ($user->isActive())
+                        <span class="badge badge-primary">Active</span>
+                    @endif
+                </td>
                 {{--<td>--}}
                     {{--@if ($user->isAdmin())--}}
                         {{--<span class="badge badge-danger">Admin</span>--}}
