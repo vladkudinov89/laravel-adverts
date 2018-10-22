@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $slug
  * @property int|null $parent_id
  *
+ * @property Region $parent
+ * @property Region[] $children
  *
  */
 class Region extends Model
