@@ -20,6 +20,8 @@ class Region extends Model
         'parent_id'
     ];
 
+    public $timestamps = false;
+
     public function parent()
     {
         return $this->belongsTo(static::class , 'parent_id' , 'id');
