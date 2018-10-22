@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
+
     public function index(Request $request)
     {
         $query = User::orderByDesc('id');
