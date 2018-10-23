@@ -28,7 +28,7 @@ class AddUserVerification extends Migration
     {
         Schema::table('user', function (Blueprint $table) {
             $table->dropColumn('status');
-            $table->dropColumn('verify_code');
+            $table->dropColumn('verify_token');
         });
     }
 }
