@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Entity\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,6 +11,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function testBasicTest(): void
     {
         $response = $this->get('/register');
