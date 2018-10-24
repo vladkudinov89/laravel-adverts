@@ -15,7 +15,7 @@ class AddUserPhone extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable()->after('email');
-            $table->string('phone_verified')->default(false)->after('phone');
+            $table->boolean('phone_verified')->default(false)->after('phone');
             $table->string('phone_verified_token')->nullable()->after('phone_verified');
             $table->timestamp('phone_verified_token_expire')->nullable()->after('phone_verified_token');
 
