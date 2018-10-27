@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cabinet;
 
+use App\Services\Sms\SmsSender;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,12 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class PhoneController extends Controller
 {
+    private $sms;
+
+    public function __construct(SmsSender $sms)
+    {
+        $this->sms = $sms;
+    }
+
     public function request(Request $request)
     {
         $user = Auth::user();
 
         try {
             $token = $user->requestPhoneVerification(Carbon::now());
+            $this->sms->send($user->phone , 'Phone verification token: ' . $token);
         } catch (\DomainException $e) {
             $request->session()->flash('error', $e->getMessage());
         }
