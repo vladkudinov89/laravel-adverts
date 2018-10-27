@@ -15,6 +15,7 @@ use Mockery\Exception\InvalidArgumentException;
  * @property string $last_name
  * @property string $email
  * @property string $phone
+ * @property boolean $phone_auth
  * @property boolean $phone_verified
  * @property string $password
  * @property string $verify_token
@@ -43,6 +44,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'phone_auth' => 'boolean',
         'phone_verified' => 'boolean',
         'phone_verified_token_expire' => 'datetime'
     ];
@@ -168,5 +170,30 @@ class User extends Authenticatable
         $this->phone_verified_token = null;
         $this->phone_verified_token_expire = null;
         $this->saveOrFail();
+    }
+
+    public function isPhoneAuthEnabled(): bool
+    {
+        return (bool)$this->phone_auth;
+    }
+
+    public function disablePhoneAuth(): void
+    {
+        $this->phone_auth = false;
+        $this->saveOrFail();
+    }
+
+    public function enablePhoneAuth(): void
+    {
+        if (!empty($this->phone) && !$this->isPhoneVerified()) {
+            throw new \DomainException('Phone number is empty.');
+        }
+        $this->phone_auth = true;
+        $this->saveOrFail();
+    }
+
+    public function hasFilledProfile(): bool
+    {
+        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
     }
 }

@@ -23,7 +23,7 @@ class PhoneController extends Controller
 
         try {
             $token = $user->requestPhoneVerification(Carbon::now());
-            $this->sms->send($user->phone , 'Phone verification token: ' . $token);
+            $this->sms->send($user->phone, 'Phone verification token: ' . $token);
         } catch (\DomainException $e) {
             $request->session()->flash('error', $e->getMessage());
         }
@@ -34,23 +34,36 @@ class PhoneController extends Controller
     {
         $user = Auth::user();
 
-        return view('cabinet.profile.phone' , compact('user'));
+        return view('cabinet.profile.phone', compact('user'));
     }
 
     public function verify(Request $request)
     {
-        $this->validate($request , [
+        $this->validate($request, [
             'token' => 'required|string|max:255'
         ]);
 
         $user = Auth::user();
 
         try {
-            $user->verifyPhone($request['token'] , Carbon::now());
+            $user->verifyPhone($request['token'], Carbon::now());
         } catch (\DomainException $e) {
             return redirect()->route('cabinet.profile.phone')
-                ->with('error' , $e->getMessage());
+                ->with('error', $e->getMessage());
         }
+        return redirect()->route('cabinet.profile.home');
+    }
+
+    public function auth()
+    {
+        $user = Auth::user();
+
+        if ($user->isPhoneAuthEnabled()) {
+            $user->disablePhoneAuth();
+        } else {
+            $user->enablePhoneAuth();
+        }
+
         return redirect()->route('cabinet.profile.home');
     }
 

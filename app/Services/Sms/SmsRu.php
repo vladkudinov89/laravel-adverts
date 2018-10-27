@@ -2,9 +2,7 @@
 
 namespace App\Services\Sms;
 
-
 use GuzzleHttp\Client;
-use Psr\Log\InvalidArgumentException;
 
 class SmsRu implements SmsSender
 {
@@ -15,7 +13,7 @@ class SmsRu implements SmsSender
     public function __construct($appId, $url = 'https://sms.ru/sms/send')
     {
         if (empty($appId)) {
-            throw new InvalidArgumentException('Sms appId must be set.');
+            throw new \InvalidArgumentException('Sms appId must be set.');
         }
 
         $this->appId = $appId;
