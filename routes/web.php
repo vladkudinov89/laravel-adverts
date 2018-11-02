@@ -9,6 +9,8 @@ Route::post('/login/phone', 'Auth\LoginController@verify');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.verify');
 
+Route::get('ajax/regions', 'Ajax\RegionController@get')->name('ajax.regions');
+
 
 Route::group(
     [

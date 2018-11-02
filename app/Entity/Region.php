@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Region $parent
  * @property Region[] $children
+ *
+ * @method Builder roots()
  *
  */
 class Region extends Model
@@ -24,6 +27,10 @@ class Region extends Model
 
     public $timestamps = false;
 
+    public function getAddress(): string
+    {
+        return ($this->parent ? $this->parent->getAddress() . ', ' : '') . $this->name;
+    }
     public function parent()
     {
         return $this->belongsTo(static::class , 'parent_id' , 'id');
@@ -32,5 +39,10 @@ class Region extends Model
     public function children()
     {
         return $this->hasMany(static::class, 'parent_id' , 'id');
+    }
+
+    public function scopeRoots(Builder $query)
+    {
+        return $query->where('parent_id' , null);
     }
 }

@@ -31,4 +31,15 @@ class RoleTest extends TestCase
 
         $user->changeRole(User::ROLE_ADMIN);
     }
+
+    public function testChangeRoleToModerator(): void
+    {
+        $user = factory(User::class)->create(['role' => User::ROLE_USER]);
+
+        $user->changeRole(User::ROLE_MODERATOR);
+
+        self::assertEquals(User::ROLE_MODERATOR , $user->role);
+        self::assertFalse($user->isAdmin());
+        self::assertFalse($user->isUserRole());
+    }
 }
