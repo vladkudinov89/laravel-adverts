@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Adverts;
 
-use App\Entity\Adverts\Advert;
+use App\Entity\Adverts\Advert\Advert;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\PhotoRequest;
@@ -50,6 +50,17 @@ class ManageController extends Controller
         }
 
         return redirect()->route('adverts.show', $advert);
+    }
+
+    public function moderate(Advert $advert)
+    {
+        try {
+            $this->service->moderate($advert->id);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back();
     }
 
     public function destroy(Advert $advert)

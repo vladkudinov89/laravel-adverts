@@ -7,8 +7,8 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.profile.home') }}">Profile</a></li>
     </ul>
 
-    <div class="region-selector" data-selected="{{ json_encode((array)old('regions')) }}"
-         data-source="{{ route('ajax.regions') }}">
+    {{--<div class="region-selector" data-selected="{{ json_encode((array)old('regions')) }}"--}}
+         {{--data-source="{{ route('ajax.regions') }}">--}}
 
-    </div>
+    {{--</div>--}}
 @endsection

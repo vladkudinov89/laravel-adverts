@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Cabinet\Adverts;
 
-use App\Entity\Adverts\Advert;
+use App\Entity\Adverts\Advert\Advert;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\PhotoRequest;

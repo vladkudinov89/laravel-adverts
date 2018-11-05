@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Entity\Adverts;
+namespace App\Entity\Adverts\Advert;
 
+use App\Entity\Adverts\Category;
+use App\Entity\Adverts\Advert\Value;
 use App\Entity\Region;
 use App\Entity\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,11 +27,15 @@ use Carbon\Carbon;
  * @property Carbon $expires_at
  *
  * @property Category $category
+ * @property User $user
+ * @property Region $region
  * @property Value[] $values
  *
  *
  *  @method Builder forUser(User $user);
  *  @method Builder forCategory(Category $category);
+ *  @method Builder forRegion(Region $region);
+ *  @method Builder active();
  */
 class Advert extends Model
 {
@@ -68,6 +74,21 @@ class Advert extends Model
             [ $category->id],
             $category->descendants()->pluck('id')->toArray()
         ));
+    }
+
+    public function scopeForRegion(Builder $query, Region $region)
+    {
+        $ids = [$region->id];
+        $childrenIds = $ids;
+        while ($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
+            $ids = array_merge($ids, $childrenIds);
+        }
+        return $query->whereIn('region_id', $ids);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('status' , self::STATUS_ACTIVE);
     }
 
     public function isDraft(): bool
@@ -152,6 +173,18 @@ class Advert extends Model
             'status' => self::STATUS_DRAFT,
             'reject_reason' => $reason
         ]);
+    }
+
+    public function getValue($id)
+    {
+        foreach ($this->values as $value) {
+            if( $value->attribute_id === $id)
+            {
+                return $value->value;
+            }
+        }
+
+        return null;
     }
 
 
