@@ -11,7 +11,9 @@
 
                 @if ($attribute->isSelect())
 
-                    <select id="attribute_{{ $attribute->id }}" class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}" name="attributes[{{ $attribute->id }}]">
+                    <select id="attribute_{{ $attribute->id }}"
+                            class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
+                            name="attributes[{{ $attribute->id }}]">
                         <option value=""></option>
                         @foreach ($attribute->variants as $variant)
                             <option value="{{ $variant }}"{{ $variant == old('attributes.' . $attribute->id, $advert->getValue($attribute->id)) ? ' selected' : '' }}>
@@ -22,11 +24,17 @@
 
                 @elseif ($attribute->isNumber())
 
-                    <input id="attribute_{{ $attribute->id }}" type="number" class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}" name="attributes[{{ $attribute->id }}]" value="{{ old('attributes.' . $attribute->id, $advert->getValue($attribute->id)) }}">
+                    <input id="attribute_{{ $attribute->id }}" type="number"
+                           class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
+                           name="attributes[{{ $attribute->id }}]"
+                           value="{{ old('attributes.' . $attribute->id, $advert->getValue($attribute->id)) }}">
 
                 @else
 
-                    <input id="attribute_{{ $attribute->id }}" type="text" class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}" name="attributes[{{ $attribute->id }}]" value="{{ old('attributes.' . $attribute->id, $advert->getValue($attribute->id)) }}">
+                    <input id="attribute_{{ $attribute->id }}" type="text"
+                           class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
+                           name="attributes[{{ $attribute->id }}]"
+                           value="{{ old('attributes.' . $attribute->id, $advert->getValue($attribute->id)) }}">
 
                 @endif
 
