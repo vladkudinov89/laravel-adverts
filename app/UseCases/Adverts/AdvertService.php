@@ -99,10 +99,10 @@ class AdvertService
         });
     }
 
-//    public function expire(Advert $advert): void
-//    {
-//        $advert->expire();
-//    }
+    public function expire(Advert $advert): void
+    {
+        $advert->expire();
+    }
 //
 //    public function close($id): void
 //    {
