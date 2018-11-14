@@ -187,5 +187,12 @@ class Advert extends Model
         return null;
     }
 
+    public function expire(): void
+    {
+        $this->update([
+            'status' => self::STATUS_CLOSED,
+        ]);
+    }
+
 
 }
